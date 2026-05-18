@@ -24,11 +24,7 @@ sap.ui.define(function() {
 			module: "./{name}.qunit"
 		},
 		tests: {
-			// test file for the Example control
-			Example: {
-				title: "QUnit Test for Example",
-				_alternativeTitle: "QUnit tests: com.myorg.reuselib.Example"
-			}
+			// add test files here once library controls are implemented
 		}
 	};
 
