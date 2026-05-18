@@ -1,18 +1,18 @@
 {
   "compilerOptions": {
       "target": "es2022",
-      "module": "es2022",
-      "moduleResolution": "node",
+      "module": "esnext",
+      "moduleResolution": "bundler",
       "skipLibCheck": true,
       "allowJs": true,
       "strict": true,
       "strictPropertyInitialization": false,
       "rootDir": "./",
       "outDir": "./dist",
-      "baseUrl": "./",
-      "typeRoots": [
-        "./node_modules/@types",
-        "./node_modules/@sapui5/types"
+      "types": [
+        "@sapui5/types",
+        "@types/jquery",
+        "@types/qunit"
       ],
       "paths": {
           "com/myorg/reuselib/*": [
