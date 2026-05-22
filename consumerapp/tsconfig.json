@@ -21,12 +21,15 @@
         "./webapp/test/integration/*"
       ]
     },
-    "typeRoots": [
-      "./node_modules/@types",
-      "./node_modules/@sapui5/types"
+    "types": [
+      "@sapui5/types",
+      "qunit"
     ]
   },
   "include": [
     "./webapp/**/*"
+  ],
+  "files": [
+    "../com.myorg.reuselib/dist/index.d.ts"
   ]
 }

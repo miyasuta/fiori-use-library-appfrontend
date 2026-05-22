@@ -38,7 +38,10 @@
       "minUI5Version": "1.148.0",
       "libs": {
         "sap.m": {},
-        "sap.ui.core": {}
+        "sap.ui.core": {},
+        "com.myorg.reuselib": {
+          "lazy": false
+        }
       }
     },
     "contentDensities": {
