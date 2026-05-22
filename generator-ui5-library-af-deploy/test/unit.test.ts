@@ -60,4 +60,13 @@ describe("generator output", () => {
         );
         assert.equal(actual, expected);
     });
+
+    it("writes xs-security.json with xsappname derived from namespace", async () => {
+        const out = await runGeneratorOn("library-namespace-form");
+        const actual = JSON.parse(await readFile(join(out, "xs-security.json"), "utf8"));
+        assert.equal(actual.xsappname, "commyorgreuselib");
+        assert.equal(actual["tenant-mode"], "dedicated");
+        assert.deepEqual(actual.scopes, []);
+        assert.deepEqual(actual["role-templates"], []);
+    });
 });

@@ -18,5 +18,10 @@ export default class extends Generator {
             this.templatePath("xs-app.json"),
             this.destinationPath("xs-app.json")
         );
+        this.fs.copyTpl(
+            this.templatePath("xs-security.json.ejs"),
+            this.destinationPath("xs-security.json"),
+            { ...this.ctx }
+        );
     }
 }
