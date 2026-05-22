@@ -23,5 +23,10 @@ export default class extends Generator {
             this.destinationPath("xs-security.json"),
             { ...this.ctx }
         );
+        this.fs.copyTpl(
+            this.templatePath("ui5-deploy.yaml.ejs"),
+            this.destinationPath("ui5-deploy.yaml"),
+            { ...this.ctx }
+        );
     }
 }

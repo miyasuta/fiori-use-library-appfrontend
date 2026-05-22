@@ -69,4 +69,15 @@ describe("generator output", () => {
         assert.deepEqual(actual.scopes, []);
         assert.deepEqual(actual["role-templates"], []);
     });
+
+    it("writes ui5-deploy.yaml with namespace, version, libraries, and archiveName", async () => {
+        const out = await runGeneratorOn("library-namespace-form");
+        const actual = await readFile(join(out, "ui5-deploy.yaml"), "utf8");
+        assert.match(actual, /metadata:\s*\n\s*name: com\.myorg\.reuselib/);
+        assert.match(actual, /version: 1\.146\.0/);
+        assert.match(actual, /- name: sap\.ui\.core/);
+        assert.match(actual, /- name: themelib_sap_fiori_3/);
+        assert.match(actual, /archiveName: commyorgreuselib/);
+        assert.match(actual, /afterTask: buildThemes/);
+    });
 });
