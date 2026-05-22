@@ -90,4 +90,30 @@ describe("generator output", () => {
         assert.match(actual, /service-name: commyorgreuselib-app-front-service/);
         assert.doesNotMatch(actual, /miyasutaconsumerapp/);
     });
+
+    it("rewrites ui5.yaml metadata.name when the user confirms the prompt", async () => {
+        const out = await runGeneratorOn("library-not-namespace-form");
+        const yaml = await readFile(join(out, "ui5.yaml"), "utf8");
+        assert.match(yaml, /name: com\.myorg\.reuselib/);
+        assert.doesNotMatch(yaml, /name: "reuselib"/);
+        assert.doesNotMatch(yaml, /name: reuselib\s*$/m);
+    });
+
+    it("does not write deploy files when the user rejects the namespace prompt", async () => {
+        const tmp = await mkdtemp(join(tmpdir(), "lib-af-deploy-abort-"));
+        await cp(fixtureDir("library-not-namespace-form"), tmp, { recursive: true });
+        await helpers
+            .run(join(__dirname, "../dist/app"))
+            .cd(tmp)
+            .withAnswers({ updateNamespace: false });
+        for (const file of ["mta.yaml", "ui5-deploy.yaml", "xs-app.json", "xs-security.json"]) {
+            await assert.rejects(
+                readFile(join(tmp, file), "utf8"),
+                /ENOENT/,
+                `${file} should not be created when user rejects prompt`,
+            );
+        }
+        const yaml = await readFile(join(tmp, "ui5.yaml"), "utf8");
+        assert.match(yaml, /name: "reuselib"/, "ui5.yaml should be untouched");
+    });
 });

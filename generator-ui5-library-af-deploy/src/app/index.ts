@@ -13,6 +13,26 @@ export default class extends Generator {
         this.currentMetadataName = result.currentMetadataName;
     }
 
+    async prompting(): Promise<void> {
+        if (!this.needsUi5YamlUpdate) return;
+
+        const { updateNamespace } = await this.prompt<{ updateNamespace: boolean }>([{
+            type: "confirm",
+            name: "updateNamespace",
+            message:
+                `ui5.yaml metadata.name is "${this.currentMetadataName}". ` +
+                `Update it to "${this.ctx.libraryNamespace}" (detected from src/ structure)?`,
+            default: true,
+        }]);
+
+        if (!updateNamespace) {
+            this.log(
+                "Aborted: metadata.name must match the src/ directory structure to deploy properly."
+            );
+            this.cancelCancellableTasks();
+        }
+    }
+
     writing(): void {
         this.fs.copy(
             this.templatePath("xs-app.json"),
@@ -33,5 +53,22 @@ export default class extends Generator {
             this.destinationPath("mta.yaml"),
             { ...this.ctx }
         );
+
+        if (this.needsUi5YamlUpdate) {
+            this.updateUi5YamlMetadataName();
+        }
+    }
+
+    private updateUi5YamlMetadataName(): void {
+        const path = this.destinationPath("ui5.yaml");
+        const content = this.fs.read(path);
+        if (!content) {
+            throw new Error(`ui5.yaml not found at ${path}`);
+        }
+        const updated = content.replace(
+            /^(\s*name:\s*)["']?[^"'\n]+["']?(\s*$)/m,
+            `$1${this.ctx.libraryNamespace}$2`
+        );
+        this.fs.write(path, updated);
     }
 }
