@@ -116,4 +116,21 @@ describe("generator output", () => {
         const yaml = await readFile(join(tmp, "ui5.yaml"), "utf8");
         assert.match(yaml, /name: "reuselib"/, "ui5.yaml should be untouched");
     });
+
+    it("adds build:cf, build:mta, deploy scripts and devDependencies to package.json", async () => {
+        const out = await runGeneratorOn("library-namespace-form");
+        const pkg = JSON.parse(await readFile(join(out, "package.json"), "utf8"));
+
+        assert.equal(pkg.scripts["build:cf"], "ui5 build --clean-dest --config ui5-deploy.yaml --dest dist");
+        assert.equal(pkg.scripts["build:mta"], "rimraf resources mta_archives && mbt build");
+        assert.equal(pkg.scripts.deploy, "fiori cfDeploy");
+
+        assert.equal(pkg.devDependencies["ui5-task-zipper"], "^3.6.0");
+        assert.equal(pkg.devDependencies.mbt, "^1.2.49");
+        assert.equal(pkg.devDependencies.rimraf, "^6.1.3");
+
+        // Existing keys preserved
+        assert.equal(pkg.scripts.build, "ui5 build --config=ui5.yaml --clean-dest --dest dist");
+        assert.equal(pkg.devDependencies["@ui5/cli"], "^4.0.33");
+    });
 });

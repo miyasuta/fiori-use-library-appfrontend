@@ -57,6 +57,19 @@ export default class extends Generator {
         if (this.needsUi5YamlUpdate) {
             this.updateUi5YamlMetadataName();
         }
+
+        this.fs.extendJSON(this.destinationPath("package.json"), {
+            scripts: {
+                "build:cf": "ui5 build --clean-dest --config ui5-deploy.yaml --dest dist",
+                "build:mta": "rimraf resources mta_archives && mbt build",
+                deploy: "fiori cfDeploy",
+            },
+            devDependencies: {
+                "ui5-task-zipper": "^3.6.0",
+                mbt: "^1.2.49",
+                rimraf: "^6.1.3",
+            },
+        });
     }
 
     private updateUi5YamlMetadataName(): void {
