@@ -2,6 +2,9 @@ import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { mkdtemp, cp, readFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import helpers from "yeoman-test";
 import { detect } from "../dist/app/detect.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -34,5 +37,27 @@ describe("detect()", () => {
         assert.equal(result.needsUi5YamlUpdate, true);
         assert.equal(result.currentMetadataName, "reuselib");
         assert.equal(result.context.libraryNamespace, "com.myorg.reuselib");
+    });
+});
+
+describe("generator output", () => {
+    async function runGeneratorOn(fixtureName: string): Promise<string> {
+        const tmp = await mkdtemp(join(tmpdir(), "lib-af-deploy-"));
+        await cp(fixtureDir(fixtureName), tmp, { recursive: true });
+        await helpers
+            .run(join(__dirname, "../dist/app"))
+            .cd(tmp)
+            .withAnswers({ updateNamespace: true });
+        return tmp;
+    }
+
+    it("writes xs-app.json matching the template", async () => {
+        const out = await runGeneratorOn("library-namespace-form");
+        const actual = await readFile(join(out, "xs-app.json"), "utf8");
+        const expected = await readFile(
+            join(__dirname, "../src/app/templates/xs-app.json"),
+            "utf8"
+        );
+        assert.equal(actual, expected);
     });
 });
