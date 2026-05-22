@@ -80,4 +80,14 @@ describe("generator output", () => {
         assert.match(actual, /archiveName: commyorgreuselib/);
         assert.match(actual, /afterTask: buildThemes/);
     });
+
+    it("writes mta.yaml with archiveName substituted in IDs and resource names", async () => {
+        const out = await runGeneratorOn("library-namespace-form");
+        const actual = await readFile(join(out, "mta.yaml"), "utf8");
+        assert.match(actual, /^ID: commyorgreuselib/m);
+        assert.match(actual, /- commyorgreuselib\.zip/);
+        assert.match(actual, /service-name: commyorgreuselib-xsuaa-service/);
+        assert.match(actual, /service-name: commyorgreuselib-app-front-service/);
+        assert.doesNotMatch(actual, /miyasutaconsumerapp/);
+    });
 });

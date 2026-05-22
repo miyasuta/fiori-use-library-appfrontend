@@ -28,5 +28,10 @@ export default class extends Generator {
             this.destinationPath("ui5-deploy.yaml"),
             { ...this.ctx }
         );
+        this.fs.copyTpl(
+            this.templatePath("mta.yaml.ejs"),
+            this.destinationPath("mta.yaml"),
+            { ...this.ctx }
+        );
     }
 }
