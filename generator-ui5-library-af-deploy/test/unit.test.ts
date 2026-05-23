@@ -5,7 +5,7 @@ import { dirname, join } from "node:path";
 import { mkdtemp, cp, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import helpers from "yeoman-test";
-import { detect } from "../dist/app/detect.js";
+import { detect } from "../app/detect.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const fixtureDir = (name: string) => join(__dirname, "fixtures", name);
@@ -45,7 +45,7 @@ describe("generator output", () => {
         const tmp = await mkdtemp(join(tmpdir(), "lib-af-deploy-"));
         await cp(fixtureDir(fixtureName), tmp, { recursive: true });
         await helpers
-            .run(join(__dirname, "../dist/app"))
+            .run(join(__dirname, "../app"))
             .cd(tmp)
             .withAnswers({ updateNamespace: true });
         return tmp;
@@ -103,7 +103,7 @@ describe("generator output", () => {
         const tmp = await mkdtemp(join(tmpdir(), "lib-af-deploy-abort-"));
         await cp(fixtureDir("library-not-namespace-form"), tmp, { recursive: true });
         await helpers
-            .run(join(__dirname, "../dist/app"))
+            .run(join(__dirname, "../app"))
             .cd(tmp)
             .withAnswers({ updateNamespace: false });
         for (const file of ["mta.yaml", "ui5-deploy.yaml", "xs-app.json", "xs-security.json"]) {

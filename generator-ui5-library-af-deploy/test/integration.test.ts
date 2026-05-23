@@ -29,7 +29,7 @@ describe("generator output matches main branch (integration)", () => {
         );
 
         await helpers
-            .run(join(__dirname, "../dist/app"))
+            .run(join(__dirname, "../app"))
             .cd(join(outDir, libraryDir))
             .withAnswers({ updateNamespace: true });
     });

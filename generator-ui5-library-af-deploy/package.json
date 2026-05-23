@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "description": "Yeoman generator to add Application Frontend deployment configuration to a UI5 library project",
   "type": "module",
-  "files": ["dist/", "README.md"],
+  "files": ["app/", "README.md"],
   "keywords": ["yeoman-generator", "ui5", "sap", "application-frontend"],
   "scripts": {
-    "build": "tsc && cp -r src/app/templates dist/app/",
+    "build": "tsc && cp -r src/app/templates app/",
     "test": "npm run build && node --test --experimental-strip-types \"test/**/*.test.ts\"",
     "test:unit": "npm run build && node --test --experimental-strip-types test/unit.test.ts",
     "test:integration": "npm run build && node --test --experimental-strip-types test/integration.test.ts",
