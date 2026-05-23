@@ -3,6 +3,13 @@
 [library-deployment.md](library-deployment.md) で文書化した「UI5 ライブラリ を Application Frontend
 service にデプロイするための手動構築」を、Yeoman ジェネレータで自動化するアイディアの記録。
 
+> **Status update (2026-05-23):** Implemented as
+> [generator-ui5-library-af-deploy/](../../generator-ui5-library-af-deploy/) in this repository.
+> See [docs/superpowers/specs/2026-05-23-library-af-deploy-generator-design.md](../superpowers/specs/2026-05-23-library-af-deploy-generator-design.md)
+> for the realized design and
+> [docs/superpowers/plans/2026-05-23-library-af-deploy-generator.md](../superpowers/plans/2026-05-23-library-af-deploy-generator.md)
+> for the implementation plan.
+
 実装はまだ着手していない段階。要件と設計方針のメモ。
 
 ## 背景・動機
