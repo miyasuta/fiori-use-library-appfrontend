@@ -1,0 +1,29 @@
+{
+  "name": "generator-ui5-library-af-deploy",
+  "version": "0.1.0",
+  "description": "Yeoman generator to add Application Frontend deployment configuration to a UI5 library project",
+  "type": "module",
+  "files": ["app/", "README.md"],
+  "keywords": ["yeoman-generator", "ui5", "sap", "application-frontend"],
+  "scripts": {
+    "build": "tsc && cp -r src/app/templates app/",
+    "test": "npm run build && node --test --experimental-strip-types \"test/**/*.test.ts\"",
+    "test:unit": "npm run build && node --test --experimental-strip-types test/unit.test.ts",
+    "test:integration": "npm run build && node --test --experimental-strip-types test/integration.test.ts",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "dependencies": {
+    "yeoman-generator": "^7.0.0",
+    "js-yaml": "^4.1.0",
+    "glob": "^11.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/yeoman-generator": "^5.2.14",
+    "typescript": "^5.9.3",
+    "yeoman-test": "^10.0.0"
+  },
+  "peerDependencies": { "yo": ">=5.0.0" },
+  "engines": { "node": ">=20.0.0" }
+}

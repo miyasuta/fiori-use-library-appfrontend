@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "4.0"
+metadata:
+  name: <%= libraryNamespace %>
+type: library
+framework:
+  name: SAPUI5
+  version: <%= sapui5Version %>
+  libraries:
+<% frameworkLibraries.forEach(function(lib) { -%>
+    - name: <%= lib %>
+<% }); -%>
+builder:
+  customTasks:
+    - name: ui5-tooling-transpile-task
+      afterTask: replaceVersion
+      configuration:
+        debug: true
+        transformModulesToUI5:
+          overridesToOverride: true
+    - name: ui5-task-zipper
+      afterTask: buildThemes # For libraries, generateCachebusterInfo is not executed
+      configuration:
+        archiveName: <%= archiveName %>
+        relativePaths: true
+        additionalFiles:
+          - xs-app.json
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+resources:
+  configuration:
+    propertiesFileSourceEncoding: UTF-8
