@@ -3,7 +3,18 @@
   "version": "0.1.0",
   "description": "Yeoman generator to add Application Frontend deployment configuration to a UI5 library project",
   "type": "module",
-  "files": ["app/", "README.md"],
+  "author": "miyasuta",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miyasuta/fiori-use-library-appfrontend.git",
+    "directory": "generator-ui5-library-af-deploy"
+  },
+  "bugs": {
+    "url": "https://github.com/miyasuta/fiori-use-library-appfrontend/issues"
+  },
+  "homepage": "https://github.com/miyasuta/fiori-use-library-appfrontend/tree/main/generator-ui5-library-af-deploy#readme",
+  "files": ["app/", "README.md", "LICENSE"],
   "keywords": ["yeoman-generator", "ui5", "sap", "application-frontend"],
   "scripts": {
     "build": "tsc && cp -r src/app/templates app/",
