@@ -49,7 +49,7 @@ npm run deploy
 
 - Targets Application Frontend service only (not the classic HTML5 App Repo)
 - Authentication type is fixed to `ias`
-- Always creates new `app-front` and XSUAA service instances (no reuse of existing ones)
+- Always creates new service instances. If you want to reuse existing instances, adjust `mta.yaml` after running the generator.
 
 ## Design
 
