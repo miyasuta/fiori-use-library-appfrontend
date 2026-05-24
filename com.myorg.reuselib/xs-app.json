@@ -15,11 +15,6 @@
       "destination": "ui5"
     },
     {
-      "source": "^/logout-page.html$",
-      "service": "app-front",
-      "authenticationType": "none"
-    },
-    {
       "source": "^(.*)$",
       "target": "$1",
       "service": "app-front",
