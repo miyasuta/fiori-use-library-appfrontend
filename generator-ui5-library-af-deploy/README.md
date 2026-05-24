@@ -20,7 +20,7 @@ yo ui5-library-af-deploy
 The generator reads `ui5.yaml` and the `src/` directory structure of the current project, then:
 
 1. Detects the library namespace from `src/<path>/library.{ts,js}`.
-2. If `metadata.name` in `ui5.yaml` does not match the detected namespace, prompts to update it.
+2. If `metadata.name` in `ui5.yaml` does not match the detected namespace, asks for confirmation and rewrites the line for you (answering "no" aborts the generator).
 3. Creates the following deploy configuration files:
    - `mta.yaml` — MTA module + resources for Application Frontend + XSUAA
    - `ui5-deploy.yaml` — UI5 build config with `ui5-task-zipper` configured for library builds
